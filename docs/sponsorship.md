@@ -1,13 +1,10 @@
 # Help PyFactories
 
-Do you like **PyFactories** and would like to help PyFactories, other userd and the author?
-
-## 🐦 Follow PyFactories on Twitter
-
+Do you like **PyFactories** and would like to help PyFactories, other user and the author?
 
 ## ⭐ Star **PyFactories** on GitHub
 
-Giving a start to PyFactories is very simple and helps promoting the work across the developers around the world.
+Giving a star to PyFactories is very simple and helps promoting the work across the developers around the world.
 
 The button is located at the top right.
 
@@ -15,14 +12,22 @@ The button is located at the top right.
 
 This will help spreading the word about the tool and how helpful has been.
 
+## ⭐ Star **Polyfactory** on GitHub
+
+Giving a star to Polyfactory is very simple and helps promoting the work of the developers that
+originally created Pydantic Factories.
+
+The button is located at the top right.
+
+[https://github.com/litestar-org/polyfactory](https://github.com/litestar-org/polyfactory).
+
+This will help spreading the word about the tool and how helpful has been.
 ## 👀 Follow the GitHub repo
 
 Following the GitHub repo will allow you to "watch" for any new release of PyFactories and be always up to date.
 
 You can click on "***watch***" and select "***custom***" -> "***Releases***"or any other you may find particular
 interesting to you.
-
-## 💬 Join the official PyFactories discord channel
 
 ## 🔥 Sponsor the author
 
