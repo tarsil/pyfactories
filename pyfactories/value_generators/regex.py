@@ -44,7 +44,7 @@ from string import (
 from typing import Any, Dict, List, Optional, Pattern, Tuple, Union
 
 try:  # >=3.11
-    from re._parser import SubPattern, parse  # pyright:ignore
+    from re._parser import SubPattern, parse  # pyright: ignore
 except ImportError:  # < 3.11
     from sre_parse import SubPattern, parse  # pylint: disable=deprecated-module
 

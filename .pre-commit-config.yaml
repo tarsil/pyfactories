@@ -44,6 +44,13 @@ repos:
         name: isort (pyi)
         types: [pyi]
         args: ["--project=pyfactories", "--line-length=99"]
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.293
+    hooks:
+      - id: pyright
+        exclude: "extension"
+        additional_dependencies:
+          [pydantic, faker, pytest, hypothesis, odmantic, ormar, beanie]
 ci:
   autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks
   autoupdate_commit_msg: ⬆ [pre-commit.ci] pre-commit autoupdate
