@@ -11,10 +11,8 @@ from pydantic.utils import almost_equal_floats
 T = TypeVar("T", int, float, Decimal)
 
 if TYPE_CHECKING:
-    from typing import NewType
-
     from pydantic.fields import ModelField
-    from typing_extensions import TypeGuard
+    from typing_extensions import NewType, TypeGuard
 
     from pyfactories.protocols import DataclassProtocol
 
