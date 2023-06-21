@@ -754,7 +754,6 @@ class ModelFactory(Generic[T]):
         from pyfactories.fields import PostGenerated
 
         generate_post: Dict[str, PostGenerated] = {}
-
         model = cls._get_model()
         for field_name, model_field in cls.get_model_fields(model):
             if cls._should_use_alias_name(model_field, model):

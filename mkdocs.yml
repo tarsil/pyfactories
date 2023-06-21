@@ -3,69 +3,79 @@ site_description: Mock data generation for pydantic and dataclasses.
 site_url: https://pyfactories.tarsild.io
 
 theme:
-      name: "material"
-      custom_dir: docs/overrides
-      language: en
-      palette:
-            - scheme: "default"
-              primary: "blue"
-              accent: "cyan"
-              media: "(prefers-color-scheme: light)"
-              toggle:
-                    icon: "material/lightbulb"
-                    name: "Switch to dark mode"
-            - scheme: "slate"
-              media: "(prefers-color-scheme: dark)"
-              primary: "cyan"
-              accent: "blue"
-              toggle:
-                    icon: "material/lightbulb-outline"
-                    name: "Switch to light mode"
-      favicon: statics/images/favicon.ico
-      logo: statics/images/white.png
-      features:
-            - search.suggest
-            - search.highlight
-            - content.tabs.link
+        name: "material"
+        custom_dir: docs/overrides
+        language: en
+        palette:
+                - scheme: "default"
+                  primary: "blue"
+                  accent: "cyan"
+                  media: "(prefers-color-scheme: light)"
+                  toggle:
+                          icon: "material/lightbulb"
+                          name: "Switch to dark mode"
+                - scheme: "slate"
+                  media: "(prefers-color-scheme: dark)"
+                  primary: "cyan"
+                  accent: "blue"
+                  toggle:
+                          icon: "material/lightbulb-outline"
+                          name: "Switch to light mode"
+        favicon: statics/images/favicon.ico
+        logo: statics/images/white.png
+        features:
+                - search.suggest
+                - search.highlight
+                - content.tabs.link
 
 repo_name: tarsil/pyfactories
 repo_url: https://github.com/tarsil/pyfactories
 edit_uri: ""
 plugins:
-      - search
-      - markdownextradata:
-              data: data
+        - search
+        - markdownextradata:
+                  data: data
 
 nav:
-      - Introduction: "index.md"
-      - Contributing: "contributing.md"
-      - Sponsorship: "sponsorship.md"
-      - Release Notes: "release-notes.md"
+        - Introduction: "index.md"
+        - Usage:
+                  - Build Methods: "usage/build-methods.md"
+                  - Nest Models: "usage/nest-models.md"
+                  - Dataclasses: "usage/dataclasses.md"
+                  - Configuration: "usage/configuration.md"
+                  - Defining Factory Fields: "usage/defining-factory-fields.md"
+                  - Persistence: "usage/persistence.md"
+                  - Extensions: "usage/extensions.md"
+                  - Handling Custom Types: "usage/handling-custom-types.md"
+                  - Pytest Fixtures: "usage/pytest-fixtures.md"
+        - Contributing: "contributing.md"
+        - Sponsorship: "sponsorship.md"
+        - Release Notes: "release-notes.md"
 markdown_extensions:
-      - attr_list
-      - toc:
-              permalink: true
-      - markdown.extensions.codehilite:
-              guess_lang: false
-      - mdx_include:
-              base_path: docs
-      - admonition
-      - codehilite
-      - extra
-      - pymdownx.superfences:
-              custom_fences:
-                    - name: mermaid
-                      class: mermaid
-                      format: !!python/name:pymdownx.superfences.fence_code_format ""
-      - pymdownx.emoji:
-              emoji_index: !!python/name:materialx.emoji.twemoji
-              emoji_generator: !!python/name:materialx.emoji.to_svg
-      - pymdownx.tabbed:
-              alternate_style: true
-      - md_in_html
+        - attr_list
+        - toc:
+                  permalink: true
+        - markdown.extensions.codehilite:
+                  guess_lang: false
+        - mdx_include:
+                  base_path: docs
+        - admonition
+        - codehilite
+        - extra
+        - pymdownx.superfences:
+                  custom_fences:
+                          - name: mermaid
+                            class: mermaid
+                            format: !!python/name:pymdownx.superfences.fence_code_format ""
+        - pymdownx.emoji:
+                  emoji_index: !!python/name:materialx.emoji.twemoji
+                  emoji_generator: !!python/name:materialx.emoji.to_svg
+        - pymdownx.tabbed:
+                  alternate_style: true
+        - md_in_html
 
 extra:
-      alternate:
-            - link: /
-              name: English
-              lang: en
+        alternate:
+                - link: /
+                  name: English
+                  lang: en

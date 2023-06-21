@@ -17,7 +17,7 @@ try:
 except ImportError:
     pytest.skip(allow_module_level=True)
 
-postgres_dsn = "postgresql+asyncpg://pyfactories:pyfactories@postgres:5432/pyfactories"
+postgres_dsn = "postgresql+asyncpg://postgres:postgres@localhost:5432/pyfactories"
 
 database = Database(url=postgres_dsn, force_rollback=True)
 metadata = sqlalchemy.MetaData()
