@@ -10,13 +10,13 @@ from pyfactories.utils import is_pydantic_model, is_union
 try:
     from ormar import Model
 except ImportError:
-    Model = BaseModel  # type: ignore
+    Model = BaseModel
 
 if TYPE_CHECKING:
     from pydantic.fields import ModelField
 
 
-class OrmarModelFactory(ModelFactory[Model]):  # pragma: no cover # type: ignore
+class OrmarModelFactory(ModelFactory[Model]):  # pragma: no cover
     @classmethod
     def get_field_value(
         cls, model_field: "ModelField", field_parameters: Union[dict, list, None] = None

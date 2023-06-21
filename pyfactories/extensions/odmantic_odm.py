@@ -8,8 +8,8 @@ from pyfactories.fields import Ignore
 try:
     from odmantic import EmbeddedModel, Model
 except ImportError:
-    Model = BaseModel  # type: ignore
-    EmbeddedModel = BaseModel  # type: ignore
+    Model = BaseModel
+    EmbeddedModel = BaseModel
 
 
 T = TypeVar("T", Model, EmbeddedModel)

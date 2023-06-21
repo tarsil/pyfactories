@@ -8,7 +8,7 @@ from pyfactories.protocols import AsyncPersistenceProtocol
 try:
     from beanie import Document
 except ImportError:
-    Document = BaseModel  # type: ignore
+    Document = BaseModel
 
 if TYPE_CHECKING:
     from pydantic.fields import ModelField
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 class BeaniePersistenceHandler(AsyncPersistenceProtocol[Document]):
     async def save(self, data: Document) -> Document:
         """Persists a single instance in mongoDB."""
-        return await data.insert()  # type: ignore
+        return await data.insert()
 
     async def save_many(self, data: List[Document]) -> List[Document]:
         """Persists multiple instances in mongoDB.
