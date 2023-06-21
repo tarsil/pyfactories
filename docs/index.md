@@ -103,6 +103,11 @@ upcoming Pydantic 2.0, it will be even more robust with the core done in Rust.
 
 This library is open to contributions. [Please see the contribution guide!][contributing]
 
+## Star the initial authors
+
+Although the intial [Pydantic Factories][pydantic_factories] is no longer maintained, there is
+always the [Polyfactory][polyfactory] that deserves a ⭐️.
+
 [docs]: https://pyfactories.tarsild.io
 [github]: https://github.com/tarsil/pyfactories
 [pydantic_factories]: https://github.com/litestar-org/pydantic-factories
