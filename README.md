@@ -1,7 +1,7 @@
 # PyFactories
 
 <p align="center">
-  <a href="https://esmerald.dymmond.com"><img src="https://res.cloudinary.com/tarsild/image/upload/v1687347327/packages/pyfactories/logo_lvtl5d.png" alt='Esmerald'></a>
+  <a href="https://pyfactories.tarsild.io"><img src="https://res.cloudinary.com/tarsild/image/upload/v1687347327/packages/pyfactories/logo_lvtl5d.png" alt='PyFactories'></a>
 </p>
 
 
@@ -27,7 +27,7 @@
 
 **Documentation**: [https://pyfactories.tarsild.io][docs] 📚
 
-**Source Code**: [https://github.com/dymmond/esmerald][github]
+**Source Code**: [https://github.com/tarsil/pyfactories][github]
 
 ---
 
