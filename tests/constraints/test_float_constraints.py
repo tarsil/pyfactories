@@ -3,7 +3,7 @@ from typing import Optional
 import pytest
 from hypothesis import given
 from hypothesis.strategies import floats
-from pydantic import ConstrainedFloat
+from pydantic.v1 import ConstrainedFloat
 
 from pyfactories.constraints.float import handle_constrained_float
 from pyfactories.exceptions import ParameterError

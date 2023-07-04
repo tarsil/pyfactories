@@ -2,7 +2,7 @@ from typing import List, Optional
 
 import pytest
 from faker import Faker
-from pydantic import BaseModel, Field
+from pydantic.v1 import BaseModel, Field
 from tests.models import Pet
 
 from pyfactories import ConfigurationError, ModelFactory

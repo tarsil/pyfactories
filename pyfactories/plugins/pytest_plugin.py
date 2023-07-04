@@ -4,7 +4,7 @@ from typing import Any, Callable, ClassVar, Dict, Literal, Optional, Type, Union
 
 import pytest
 from _pytest.config import Config
-from pydantic import validate_arguments
+from pydantic.v1 import validate_arguments
 
 from pyfactories.exceptions import ParameterError
 from pyfactories.factory import ModelFactory

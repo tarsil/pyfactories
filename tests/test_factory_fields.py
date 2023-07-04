@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from typing import Any, Optional
 
 import pytest
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from pyfactories import ModelFactory, Use
 from pyfactories.exceptions import MissingBuildKwargError

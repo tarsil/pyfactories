@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Any, List, Union
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from pyfactories.factory import ModelFactory
 from pyfactories.protocols import AsyncPersistenceProtocol
@@ -11,7 +11,7 @@ except ImportError:
     Document = BaseModel
 
 if TYPE_CHECKING:
-    from pydantic.fields import ModelField
+    from pydantic.v1.fields import ModelField
 
 
 class BeaniePersistenceHandler(AsyncPersistenceProtocol[Document]):

@@ -1,7 +1,7 @@
 from typing import List
 
 import pytest
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 from tests.models import Person, PersonFactoryWithoutDefaults
 
 from pyfactories import ModelFactory

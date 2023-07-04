@@ -3,8 +3,8 @@ from typing import Any, Optional
 import pytest
 from hypothesis import given
 from hypothesis.strategies import integers
-from pydantic import BaseConfig, ConstrainedList
-from pydantic.fields import ModelField
+from pydantic.v1 import BaseConfig, ConstrainedList
+from pydantic.v1.fields import ModelField
 
 from pyfactories import ModelFactory
 from pyfactories.constraints.collection import handle_constrained_collection

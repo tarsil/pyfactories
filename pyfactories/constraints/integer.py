@@ -7,7 +7,7 @@ from pyfactories.value_generators.constrained_number import (
 from pyfactories.value_generators.primitives import create_random_integer
 
 if TYPE_CHECKING:
-    from pydantic import ConstrainedInt
+    from pydantic.v1 import ConstrainedInt
 
 
 def handle_constrained_int(field: "ConstrainedInt") -> int:

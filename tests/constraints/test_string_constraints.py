@@ -4,7 +4,7 @@ from typing import Optional
 import pytest
 from hypothesis import given, settings
 from hypothesis.strategies import booleans, integers
-from pydantic import ConstrainedStr
+from pydantic.v1 import ConstrainedStr
 
 from pyfactories.constraints.strings import handle_constrained_string
 from pyfactories.exceptions import ParameterError

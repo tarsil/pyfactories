@@ -2,9 +2,9 @@ from dataclasses import dataclass as vanilla_dataclass
 from dataclasses import field
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel
-from pydantic.dataclasses import Field  # type: ignore
-from pydantic.dataclasses import dataclass as pydantic_dataclass
+from pydantic.v1 import BaseModel
+from pydantic.v1.dataclasses import Field  # type: ignore
+from pydantic.v1.dataclasses import dataclass as pydantic_dataclass
 from tests.models import Person
 
 from pyfactories import ModelFactory

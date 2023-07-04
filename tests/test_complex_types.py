@@ -16,7 +16,7 @@ from typing import (
 )
 
 import pytest
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 from tests.models import Person
 
 from pyfactories import ModelFactory

@@ -2,7 +2,7 @@ from datetime import date
 from decimal import Decimal
 from typing import Any, Dict, List, NewType, Optional, Tuple, Union
 
-from pydantic import (
+from pydantic.v1 import (
     BaseModel,
     PositiveFloat,
     conbytes,

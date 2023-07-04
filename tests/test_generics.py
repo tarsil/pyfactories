@@ -1,7 +1,7 @@
 from typing import Generic, List, Optional, TypeVar, Union
 
-from pydantic import BaseModel
-from pydantic.generics import GenericModel
+from pydantic.v1 import BaseModel
+from pydantic.v1.generics import GenericModel
 
 from pyfactories import ModelFactory
 

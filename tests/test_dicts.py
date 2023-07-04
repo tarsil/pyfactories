@@ -1,6 +1,6 @@
 from typing import Dict
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from pyfactories import ModelFactory
 

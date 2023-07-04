@@ -5,7 +5,7 @@ from typing import Any, NewType, Union
 
 from hypothesis import given
 from hypothesis.strategies import decimals, floats, integers
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from pyfactories.factory import ModelFactory
 from pyfactories.utils import (

@@ -5,7 +5,7 @@ from pyfactories.value_generators.primitives import create_random_bytes, create_
 from pyfactories.value_generators.regex import RegexFactory
 
 if TYPE_CHECKING:
-    from pydantic import ConstrainedBytes, ConstrainedStr
+    from pydantic.v1 import ConstrainedBytes, ConstrainedStr
 
 
 def parse_constrained_string_or_bytes(

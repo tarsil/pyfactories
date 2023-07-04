@@ -9,7 +9,7 @@ from pyfactories.value_generators.constrained_number import (
 from pyfactories.value_generators.primitives import create_random_decimal
 
 if TYPE_CHECKING:
-    from pydantic import ConstrainedDecimal
+    from pydantic.v1 import ConstrainedDecimal
 
 
 def validate_max_digits(

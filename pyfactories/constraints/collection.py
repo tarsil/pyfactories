@@ -6,8 +6,8 @@ from pyfactories.utils import unwrap_new_type_if_needed
 from pyfactories.value_generators.complex_types import handle_complex_type
 
 if TYPE_CHECKING:  # pragma: no cover
-    from pydantic import ConstrainedList, ConstrainedSet
-    from pydantic.fields import ModelField
+    from pydantic.v1 import ConstrainedList, ConstrainedSet
+    from pydantic.v1.fields import ModelField
 
     from pyfactories.factory import ModelFactory
 

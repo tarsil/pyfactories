@@ -15,7 +15,7 @@ from typing import Callable, Literal
 from uuid import UUID
 
 import pytest
-from pydantic import (
+from pydantic.v1 import (
     UUID1,
     UUID3,
     UUID4,
@@ -57,7 +57,7 @@ from pydantic import (
     StrictInt,
     StrictStr,
 )
-from pydantic.color import Color
+from pydantic.v1.color import Color
 from tests.models import Person, PersonFactoryWithDefaults, Pet
 
 from pyfactories import ModelFactory

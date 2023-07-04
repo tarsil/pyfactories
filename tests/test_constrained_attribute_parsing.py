@@ -2,7 +2,7 @@ import re
 from decimal import Decimal
 from typing import Dict, List, Tuple
 
-from pydantic import (
+from pydantic.v1 import (
     BaseModel,
     ConstrainedBytes,
     ConstrainedDecimal,

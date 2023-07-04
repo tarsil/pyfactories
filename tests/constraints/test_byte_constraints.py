@@ -3,7 +3,7 @@ from typing import Optional
 import pytest
 from hypothesis import given
 from hypothesis.strategies import booleans, integers
-from pydantic import ConstrainedBytes
+from pydantic.v1 import ConstrainedBytes
 
 from pyfactories.constraints.strings import handle_constrained_bytes
 from pyfactories.exceptions import ParameterError

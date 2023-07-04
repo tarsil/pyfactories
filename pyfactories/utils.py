@@ -4,9 +4,9 @@ from decimal import Decimal
 from inspect import isclass
 from typing import TYPE_CHECKING, Any, Optional, Tuple, Type, TypeVar, cast
 
-from pydantic import BaseModel, create_model
-from pydantic.generics import GenericModel
-from pydantic.utils import almost_equal_floats
+from pydantic.v1 import BaseModel, create_model
+from pydantic.v1.generics import GenericModel
+from pydantic.v1.utils import almost_equal_floats
 
 T = TypeVar("T", int, float, Decimal)
 

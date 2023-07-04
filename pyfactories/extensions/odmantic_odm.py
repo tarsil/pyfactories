@@ -1,6 +1,6 @@
 from typing import TypeVar
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from pyfactories.factory import ModelFactory
 from pyfactories.fields import Ignore
