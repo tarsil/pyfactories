@@ -2,7 +2,7 @@ from dataclasses import dataclass as vanilla_dataclass
 from uuid import uuid4
 
 import pytest
-from pydantic import BaseModel, Field, ValidationError
+from pydantic.v1 import BaseModel, Field, ValidationError
 from tests.models import PersonFactoryWithDefaults, Pet, PetFactory
 
 from pyfactories import ModelFactory

@@ -4,7 +4,7 @@ from typing import Dict, Optional
 import pytest
 from hypothesis import given
 from hypothesis.strategies import dates
-from pydantic import BaseModel, condate
+from pydantic.v1 import BaseModel, condate
 
 from pyfactories import ModelFactory
 

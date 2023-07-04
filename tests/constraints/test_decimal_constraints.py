@@ -4,7 +4,7 @@ from typing import Optional, cast
 import pytest
 from hypothesis import given
 from hypothesis.strategies import decimals, integers
-from pydantic import BaseModel, ConstrainedDecimal, condecimal
+from pydantic.v1 import BaseModel, ConstrainedDecimal, condecimal
 
 from pyfactories import ModelFactory
 from pyfactories.constraints.decimal import handle_constrained_decimal, handle_decimal_length

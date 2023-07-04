@@ -3,7 +3,7 @@ from typing import Optional
 import pytest
 from hypothesis import given
 from hypothesis.strategies import integers
-from pydantic import ConstrainedInt
+from pydantic.v1 import ConstrainedInt
 
 from pyfactories.constraints.integer import handle_constrained_int
 from pyfactories.exceptions import ParameterError

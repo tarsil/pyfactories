@@ -33,7 +33,7 @@ from typing import (
 from uuid import NAMESPACE_DNS, UUID, uuid1, uuid3, uuid5
 
 from faker import Faker
-from pydantic import (
+from pydantic.v1 import (
     UUID1,
     UUID3,
     UUID4,
@@ -83,8 +83,8 @@ from pydantic import (
     StrictStr,
     create_model_from_typeddict,
 )
-from pydantic.color import Color
-from pydantic.fields import SHAPE_DICT, SHAPE_MAPPING
+from pydantic.v1.color import Color
+from pydantic.v1.fields import SHAPE_DICT, SHAPE_MAPPING
 from typing_extensions import _TypedDictMeta  # type: ignore
 from typing_extensions import TypeGuard, get_args, is_typeddict
 

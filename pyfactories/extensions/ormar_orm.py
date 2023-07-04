@@ -1,8 +1,8 @@
 import random
 from typing import TYPE_CHECKING, Any, Union
 
-from pydantic import BaseModel
-from pydantic.utils import smart_deepcopy
+from pydantic.v1 import BaseModel
+from pydantic.v1.utils import smart_deepcopy
 
 from pyfactories.factory import ModelFactory
 from pyfactories.utils import is_pydantic_model, is_union
@@ -13,7 +13,7 @@ except ImportError:
     Model = BaseModel
 
 if TYPE_CHECKING:
-    from pydantic.fields import ModelField
+    from pydantic.v1.fields import ModelField
 
 
 class OrmarModelFactory(ModelFactory[Model]):  # pragma: no cover

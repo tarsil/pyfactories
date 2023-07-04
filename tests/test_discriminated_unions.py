@@ -1,6 +1,6 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field
+from pydantic.v1 import BaseModel, Field
 from typing_extensions import Annotated
 
 from pyfactories import ModelFactory

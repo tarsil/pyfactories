@@ -39,7 +39,8 @@ classifiers = [
 ]
 dependencies = [
     "faker>=18.11.1,<30.0.0",
-    "pydantic>=1.10.9,<2.0.0",
+    "pydantic>=2.0.0,<3.0.0",
+    "pydantic-extra-types>=2.0.0,<3.0.0",
     "typing-extensions>=4.6.3,<7.0.0",
 ]
 keywords = ["pyfactories"]
@@ -62,7 +63,6 @@ test = [
     "pytest-cov>=4.0.0,<5.0.0",
     "requests>=2.28.2",
     "ruff>=0.0.256,<1.0.0",
-    "saffier[testing,postgres]>=0.13.0",
 ]
 
 dev = [

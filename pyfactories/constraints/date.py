@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Type, cast
 
 if TYPE_CHECKING:
     from faker import Faker
-    from pydantic import ConstrainedDate
+    from pydantic.v1 import ConstrainedDate
 
 
 def handle_constrained_date(constrained_date: Type["ConstrainedDate"], faker: "Faker") -> date:

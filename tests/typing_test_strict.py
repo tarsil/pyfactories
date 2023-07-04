@@ -5,7 +5,7 @@ Filename should not start with "test_".
 import dataclasses
 
 import pydantic.dataclasses
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from pyfactories import ModelFactory
 

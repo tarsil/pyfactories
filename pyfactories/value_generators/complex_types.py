@@ -2,7 +2,7 @@ import random
 from collections import defaultdict, deque
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, Union, cast
 
-from pydantic.fields import (
+from pydantic.v1.fields import (
     SHAPE_DEFAULTDICT,
     SHAPE_DEQUE,
     SHAPE_DICT,

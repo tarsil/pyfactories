@@ -2,7 +2,7 @@ from datetime import date, datetime
 from typing import List, Optional, Union
 from uuid import uuid4
 
-from pydantic import UUID4, BaseModel
+from pydantic.v1 import UUID4, BaseModel
 
 from pyfactories import ModelFactory
 

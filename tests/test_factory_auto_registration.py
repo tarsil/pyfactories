@@ -1,7 +1,7 @@
 from dataclasses import dataclass as vanilla_dataclass
 from typing import List
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 from typing_extensions import TypedDict
 
 from pyfactories import ModelFactory
