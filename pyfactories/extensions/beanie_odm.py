@@ -44,14 +44,20 @@ class BeanieDocumentFactory(ModelFactory[Document]):
         Note: these fields do not have a class we can use, rather they instantiate a private class inside a closure.
         Hence, the hacky solution of checking the __name__ property
         """
-        if hasattr(model_field.type_, "__name__") and "Indexed " in model_field.type_.__name__:
-            base_type = model_field.outer_type_.__bases__[0]
-            model_field.outer_type_ = base_type
-            model_field.type_ = base_type
+        if (
+            hasattr(model_field.annotation, "__name__")
+            and "Indexed " in model_field.annotation.__name__
+        ):
+            base_type = model_field.annotation.__bases__[0]
+            model_field.annotation = base_type
+            model_field.annotation = base_type
 
-        if hasattr(model_field.type_, "__name__") and "Link" in model_field.type_.__name__:
-            link_class = model_field.outer_type_.__args__[0]
-            model_field.outer_type_ = link_class
-            model_field.type_ = link_class
+        if (
+            hasattr(model_field.annotation, "__name__")
+            and "Link" in model_field.annotation.__name__
+        ):
+            link_class = model_field.annotation.__args__[0]
+            model_field.annotation = link_class
+            model_field.annotation = link_class
 
         return super().get_field_value(model_field=model_field, field_parameters=field_parameters)

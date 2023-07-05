@@ -3,11 +3,10 @@ from typing import TYPE_CHECKING, Any, Type, Union, cast
 
 from pyfactories.exceptions import ParameterError
 from pyfactories.utils import unwrap_new_type_if_needed
-from pyfactories.value_generators.complex_types import handle_complex_type
 
 if TYPE_CHECKING:  # pragma: no cover
     from pydantic.v1 import ConstrainedList, ConstrainedSet
-    from pydantic.v1.fields import ModelField
+    from pydantic_core.core_schema import ModelField
 
     from pyfactories.factory import ModelFactory
 
@@ -20,7 +19,7 @@ def handle_constrained_collection(
     """Generate a constrained list or set."""
     constrained_field = cast(
         "Union[ConstrainedList, ConstrainedSet]",
-        unwrap_new_type_if_needed(model_field.outer_type_),
+        unwrap_new_type_if_needed(model_field.annotation),
     )  # pragma: no cover
     min_items = constrained_field.min_items or 0
     max_items = (
@@ -31,11 +30,6 @@ def handle_constrained_collection(
     if max_items < min_items:
         raise ParameterError("max_items must be longer or equal to min_items")
 
-    if model_field.sub_fields:
-        handler = lambda: handle_complex_type(  # noqa: E731
-            model_field=random.choice(model_field.sub_fields),
-            model_factory=model_factory,  # pyright: ignore
-        )
     else:
         t_type = constrained_field.item_type if constrained_field.item_type is not Any else str
         handler = lambda: model_factory.get_mock_value(t_type)  # noqa: E731

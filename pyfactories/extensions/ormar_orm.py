@@ -34,7 +34,7 @@ class OrmarModelFactory(ModelFactory[Model]):  # pragma: no cover
         ):
             return cls.get_field_value(
                 model_field=[
-                    sf for sf in model_field.sub_fields if is_pydantic_model(sf.outer_type_)
+                    sf for sf in model_field.sub_fields if is_pydantic_model(sf.annotation)
                 ][0],
                 field_parameters=field_parameters,
             )

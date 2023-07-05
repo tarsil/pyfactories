@@ -4,8 +4,7 @@ from decimal import Decimal
 from inspect import isclass
 from typing import TYPE_CHECKING, Any, Optional, Tuple, Type, TypeVar, cast
 
-from pydantic.v1 import BaseModel, create_model
-from pydantic.v1.generics import GenericModel
+from pydantic import BaseModel, create_model
 from pydantic.v1.utils import almost_equal_floats
 
 T = TypeVar("T", int, float, Decimal)
@@ -78,20 +77,11 @@ def is_multiply_of_multiple_of_in_range(
 def is_pydantic_model(value: Any) -> "TypeGuard[Type[BaseModel]]":
     """A function to determine if a given value is a subclass of BaseModel."""
     try:
-        return isclass(value) and issubclass(value, (BaseModel, GenericModel))
+        return isclass(value) and issubclass(value, BaseModel)
     except TypeError:  # pragma: no cover
         # isclass(value) returns True for python 3.9+ typings such as list[str] etc.
         # this raises a TypeError in issubclass, and so we need to handle it.
         return False
-
-
-def set_model_field_to_required(model_field: "ModelField") -> "ModelField":
-    """recursively sets the model_field and all sub_fields as required."""
-    model_field.required = True
-    if model_field.sub_fields:
-        for index, sub_field in enumerate(model_field.sub_fields):
-            model_field.sub_fields[index] = set_model_field_to_required(model_field=sub_field)
-    return model_field
 
 
 def create_model_from_dataclass(
@@ -108,22 +98,14 @@ def create_model_from_dataclass(
     model = create_model(dataclass.__name__, **{field.name: (field.type, ...) for field in dataclass_fields})  # type: ignore
     for field_name, model_field in model.__fields__.items():
         dataclass_field = [field for field in dataclass_fields if field.name == field_name][0]
-        typing_string = repr(dataclass_field.type)
-        model_field = set_model_field_to_required(model_field=model_field)
-        if typing_string.startswith("typing.Optional") or typing_string == "typing.Any":
-            model_field.required = False
-            model_field.allow_none = True
-            model_field.default = None
-        else:
-            model_field.required = True
-            model_field.allow_none = False
+        repr(dataclass_field.type)
         setattr(model, field_name, model_field)
     return cast("Type[BaseModel]", model)
 
 
 def is_union(model_field: "ModelField") -> bool:
     """Determines whether the given model_field is type Union."""
-    field_type_repr = repr(model_field.outer_type_)
+    field_type_repr = repr(model_field.annotation)
     if (
         field_type_repr.startswith("typing.Union[")
         or ("|" in field_type_repr)
@@ -135,22 +117,20 @@ def is_union(model_field: "ModelField") -> bool:
 
 def is_any(model_field: "ModelField") -> bool:
     """Determines whether the given model_field is type Any."""
-    type_name = cast("Any", getattr(model_field.outer_type_, "_name", None))
-    return model_field.type_ is Any or (type_name is not None and "Any" in type_name)
+    type_name = cast("Any", getattr(model_field.annotation, "_name", None))
+    return model_field.annotation is Any or (type_name is not None and "Any" in type_name)
 
 
 def is_optional(model_field: "ModelField") -> bool:
     """Determines whether the given model_field is type Optional."""
-    return (
-        model_field.allow_none and not is_any(model_field=model_field) and not model_field.required
-    )
+    return not model_field.is_required() and not is_any(model_field=model_field)
 
 
 def is_literal(model_field: "ModelField") -> bool:
     """Determines whether a given model_field is a Literal type."""
-    return "typing.Literal" in repr(
-        model_field.outer_type_
-    ) or "typing_extensions.Literal" in repr(model_field.outer_type_)
+    return "typing.Literal" in repr(model_field.annotation) or "typing_extensions.Literal" in repr(
+        model_field.annotation
+    )
 
 
 def is_new_type(value: Any) -> "TypeGuard[Type[NewType]]":

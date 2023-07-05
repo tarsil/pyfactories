@@ -33,7 +33,7 @@ from typing import (
 from uuid import NAMESPACE_DNS, UUID, uuid1, uuid3, uuid5
 
 from faker import Faker
-from pydantic.v1 import (
+from pydantic import (
     UUID1,
     UUID3,
     UUID4,
@@ -43,15 +43,6 @@ from pydantic.v1 import (
     AnyUrl,
     BaseModel,
     ByteSize,
-    ConstrainedBytes,
-    ConstrainedDate,
-    ConstrainedDecimal,
-    ConstrainedFloat,
-    ConstrainedFrozenSet,
-    ConstrainedInt,
-    ConstrainedList,
-    ConstrainedSet,
-    ConstrainedStr,
     DirectoryPath,
     EmailStr,
     FilePath,
@@ -68,11 +59,9 @@ from pydantic.v1 import (
     NonNegativeInt,
     NonPositiveFloat,
     PastDate,
-    PaymentCardNumber,
     PositiveFloat,
     PositiveInt,
     PostgresDsn,
-    PyObject,
     RedisDsn,
     SecretBytes,
     SecretStr,
@@ -81,10 +70,9 @@ from pydantic.v1 import (
     StrictFloat,
     StrictInt,
     StrictStr,
-    create_model_from_typeddict,
 )
-from pydantic.v1.color import Color
-from pydantic.v1.fields import SHAPE_DICT, SHAPE_MAPPING
+from pydantic_extra_types.color import Color
+from pydantic_extra_types.payment import PaymentCardNumber
 from typing_extensions import _TypedDictMeta  # type: ignore
 from typing_extensions import TypeGuard, get_args, is_typeddict
 
@@ -108,7 +96,6 @@ from pyfactories.utils import (
     is_pydantic_model,
     unwrap_new_type_if_needed,
 )
-from pyfactories.value_generators.complex_types import handle_complex_type
 from pyfactories.value_generators.primitives import create_random_boolean, create_random_bytes
 
 if TYPE_CHECKING:
@@ -207,8 +194,8 @@ class ModelFactory(Generic[T]):
         pydantic_model_field_names = set()
         for field_name, model_field in cls.get_model_fields(cast("Type[T]", pydantic_model)):
             field_kwargs = model_kwargs.get(field_name)
-            if is_pydantic_model(model_field.type_) and cls._are_model_kwargs_partial(
-                model_field.type_, field_kwargs
+            if is_pydantic_model(model_field.annotation) and cls._are_model_kwargs_partial(
+                model_field.annotation, field_kwargs
             ):
                 return True
 
@@ -217,34 +204,6 @@ class ModelFactory(Generic[T]):
         kwargs_field_names = set(model_kwargs.keys())
 
         return bool(pydantic_model_field_names - kwargs_field_names)
-
-    @classmethod
-    def _is_pydantic_model_with_partial_fields(
-        cls, field_name: str, model_field: "ModelField", **kwargs: Any
-    ) -> bool:
-        """Determines if the field is a pydantic model AND if the kwargs are missing fields that should be defined in
-        the pydantic model.
-
-        Returns False if model_field isn't a Pydantic model OR if all
-        fields of the pydantic model are defined in the kwargs, and True
-        otherwise.
-
-        Args:
-            field_name: Field name.
-            model_field: A 'ModelField' instance.
-            **kwargs: Any kwargs.
-
-        Returns:
-            A boolean determining whether the given field value is a pydantic model with missing kwargs.
-        """
-        if model_field.shape not in (SHAPE_DICT, SHAPE_MAPPING) and is_pydantic_model(
-            model_field.type_
-        ):
-            field_kwargs = kwargs.get(field_name)
-
-            return cls._are_model_kwargs_partial(model_field.type_, field_kwargs)
-
-        return False
 
     @classmethod
     def _should_use_alias_name(cls, model_field: "ModelField", model: Type[T]) -> bool:
@@ -258,52 +217,8 @@ class ModelFactory(Generic[T]):
             A boolean determining whether the field alias should be used.
         """
         return bool(model_field.alias) and not (
-            issubclass(model, BaseModel) and model.__config__.allow_population_by_field_name
+            issubclass(model, BaseModel) and model.__config__.populate_by_name
         )
-
-    @classmethod
-    def _handle_constrained_field(
-        cls, model_field: "ModelField"
-    ) -> Union[float, int, Decimal, date, str, bytes, set, frozenset, list]:
-        """Handle the built-in pydantic constrained value field types.
-
-        Args:
-            model_field: A 'ModelField' instance for a pydantic ConstrainedField type.
-
-        Returns:
-            An appropriate value for the given field type.
-        """
-        outer_type = unwrap_new_type_if_needed(model_field.outer_type_)
-        if issubclass(outer_type, ConstrainedFloat):
-            return handle_constrained_float(field=cast("ConstrainedFloat", outer_type))
-
-        if issubclass(outer_type, ConstrainedInt):
-            return handle_constrained_int(field=cast("ConstrainedInt", outer_type))
-
-        if issubclass(outer_type, ConstrainedDecimal):
-            return handle_constrained_decimal(field=cast("ConstrainedDecimal", outer_type))
-
-        if issubclass(outer_type, ConstrainedStr):
-            return handle_constrained_string(
-                field=cast("ConstrainedStr", outer_type), random_seed=cls.__random_seed__
-            )
-
-        if issubclass(outer_type, ConstrainedBytes):
-            return handle_constrained_bytes(field=cast("ConstrainedBytes", outer_type))
-
-        if issubclass(outer_type, (ConstrainedSet, ConstrainedList, ConstrainedFrozenSet)):
-            collection_type = list if issubclass(outer_type, ConstrainedList) else set
-            result = handle_constrained_collection(
-                collection_type=collection_type, model_field=model_field, model_factory=cls  # type: ignore
-            )
-            return frozenset(result) if issubclass(outer_type, ConstrainedFrozenSet) else result
-
-        if issubclass(outer_type, ConstrainedDate):
-            return handle_constrained_date(constrained_date=outer_type, faker=cls.get_faker())
-
-        raise ParameterError(
-            f"Unknown constrained field: {outer_type.__name__}"
-        )  # pragma: no cover
 
     @classmethod
     def _handle_enum(cls, outer_type: Type[Enum]) -> Any:
@@ -392,45 +307,6 @@ class ModelFactory(Generic[T]):
             A boolean typeguard.
         """
         return isclass(value) and issubclass(value, ModelFactory)
-
-    @classmethod
-    def is_constrained_field(
-        cls, value: Any
-    ) -> TypeGuard[
-        Union[
-            Type[ConstrainedBytes],
-            Type[ConstrainedDate],
-            Type[ConstrainedDecimal],
-            Type[ConstrainedFloat],
-            Type[ConstrainedFrozenSet],
-            Type[ConstrainedInt],
-            Type[ConstrainedList],
-            Type[ConstrainedSet],
-            Type[ConstrainedStr],
-        ]
-    ]:
-        """Method to determine if a given value is a pydantic Constrained Field.
-
-        Args:
-            value: An arbitrary value.
-
-        Returns:
-            A boolean typeguard.
-        """
-        return isclass(value) and any(
-            issubclass(value, c)
-            for c in (
-                ConstrainedBytes,
-                ConstrainedDate,
-                ConstrainedDecimal,
-                ConstrainedFloat,
-                ConstrainedFrozenSet,
-                ConstrainedInt,
-                ConstrainedList,
-                ConstrainedSet,
-                ConstrainedStr,
-            )
-        )
 
     @classmethod
     def is_ignored_type(cls, value: Any) -> bool:
@@ -525,7 +401,6 @@ class ModelFactory(Generic[T]):
             DirectoryPath: lambda: create_path().parent,
             EmailStr: faker.free_email,
             NameEmail: faker.free_email,
-            PyObject: lambda: "decimal.Decimal",
             Color: faker.hex_color,
             Json: faker.json,
             PaymentCardNumber: faker.credit_card_number,
@@ -626,7 +501,7 @@ class ModelFactory(Generic[T]):
         if cls.should_set_none_value(model_field=model_field):
             return None
 
-        outer_type = unwrap_new_type_if_needed(model_field.outer_type_)
+        outer_type = unwrap_new_type_if_needed(model_field.annotation)
         if isinstance(outer_type, EnumMeta):
             return cls._handle_enum(cast("Type[Enum]", outer_type))
 
@@ -635,19 +510,11 @@ class ModelFactory(Generic[T]):
                 **(field_parameters if isinstance(field_parameters, dict) else {})
             )
 
-        if isinstance(field_parameters, list) and is_pydantic_model(model_field.type_):
+        if isinstance(field_parameters, list) and is_pydantic_model(model_field.annotation):
             return [
-                cls._get_or_create_factory(model=model_field.type_).build(**build_kwargs)
+                cls._get_or_create_factory(model=model_field.annotation).build(**build_kwargs)
                 for build_kwargs in field_parameters
             ]
-
-        if cls.is_constrained_field(outer_type):
-            return cls._handle_constrained_field(model_field=model_field)
-
-        if model_field.sub_fields:
-            return handle_complex_type(
-                model_field=model_field, model_factory=cls, field_parameters=field_parameters
-            )
 
         if is_literal(model_field):
             literal_args = get_args(outer_type)
@@ -655,8 +522,8 @@ class ModelFactory(Generic[T]):
 
         # this is a workaround for the following issue: https://github.com/samuelcolvin/pydantic/issues/3415
         field_type = (
-            unwrap_new_type_if_needed(model_field.type_)
-            if model_field.type_ is not Any
+            unwrap_new_type_if_needed(model_field.annotation)
+            if model_field.annotation is not Any
             else outer_type
         )
         if cls.is_ignored_type(field_type):
@@ -706,9 +573,7 @@ class ModelFactory(Generic[T]):
         if isinstance(value, Require) and field_name not in kwargs:
             raise MissingBuildKwargError(f"Require kwarg {field_name} is missing")
 
-        return field_name not in kwargs or cls._is_pydantic_model_with_partial_fields(
-            field_name, model_field, **kwargs
-        )
+        return field_name not in kwargs
 
     @classmethod
     def get_model_fields(cls, model: Type[T]) -> ItemsView[str, "ModelField"]:
@@ -733,9 +598,6 @@ class ModelFactory(Generic[T]):
             return create_model_from_dataclass(
                 dataclass=cast("Type[DataclassProtocol]", model)
             ).__fields__.items()
-
-        if is_typeddict(model):
-            return create_model_from_typeddict(cast("Any", model)).__fields__.items()
 
         raise ConfigurationError("unknown model type passed to 'get_model_fields'")
 
